@@ -1,0 +1,7 @@
+.active {
+  color: red;
+}
+
+li::marker {
+  content: '✝ ';
+}
