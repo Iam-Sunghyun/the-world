@@ -1,4 +1,5 @@
 import { NavLink } from 'react-router-dom';
+import Logo from './Logo';
 import style from './NavigationBar.module.css';
 
 // const isActive = ({ isActive, isPending, isTransitioning }) => {
@@ -10,12 +11,16 @@ import style from './NavigationBar.module.css';
 // };
 
 function NavigationBar() {
+  // const isLoggdedIn = (e) => {
+  //   if (sessionStorage.getItem('email') && sessionStorage.getItem('password')) {
+  //     return <NavLink to='/login'>LOGIN</NavLink>;
+  //   } else {
+  //     return <NavLink to='/login'>LOGIN</NavLink>;
+  //   }
+  // };
   return (
     <nav className={style.nav}>
-      <div className={style['nav-icon-container']}>
-        <img className={style['nav-icon']} src='public\free-icon-earth-globe-1719481.png' alt='' />
-        <NavLink to='/' className={style['nav-home-text']}>The World</NavLink>
-      </div>
+      <Logo />
       <ul>
         <li>
           <NavLink to='/products'>PRODUCTS</NavLink>
@@ -24,7 +29,7 @@ function NavigationBar() {
           <NavLink to='/pricing'>PRICING</NavLink>
         </li>
         <li>
-          <NavLink to='/products'>LOGIN</NavLink>
+          <NavLink to={`${sessionStorage.getItem('isLoggedIn') ? '/app' : '/login'}`}>LOGIN</NavLink>
         </li>
       </ul>
     </nav>
