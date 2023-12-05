@@ -1,15 +1,15 @@
 import AppNav from './AppNav';
 import Footer from './Footer';
 import Logo from './Logo';
+import { Outlet } from 'react-router-dom';
 import styles from './SideBar.module.css';
 
 function SideBar() {
   return (
-    <div className={ styles.sidebar }>
+    <div className={styles.sidebar}>
       <Logo />
       <AppNav />
-      <p>도시 리스트</p>
-
+      <Outlet />
       <Footer />
     </div>
   );

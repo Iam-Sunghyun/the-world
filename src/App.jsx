@@ -1,4 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Cities from './components/Cities';
+import Countries from './components/Countries';
 import AppLayout from './pages/AppLayout';
 import Homepage from './pages/Homepage';
 import Login from './pages/Login';
@@ -17,7 +19,10 @@ function App() {
           <Route path='/products' element={<Product />} />
           <Route path='/pricing' element={<Pricing />} />
           <Route path='/login' element={<Login />} />
-          <Route path='/app' element={ <AppLayout /> } />
+          <Route path='/app' element={<AppLayout />}>
+            <Route path='cities' element={<Cities />} />
+            <Route path='countries' element={<Countries />} />
+          </Route>
           <Route path='*' element={<PageNotFound />} />
         </Routes>
       </BrowserRouter>
