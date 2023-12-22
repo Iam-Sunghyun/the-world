@@ -1,9 +1,8 @@
 .sidebar {
-  /* flex-basis: 46rem; */
-  flex-grow: 0.5;
+  flex-basis: 46rem;
   background-color: var(--color-dark--1);
   border: 1px solid var(--color-dark--0);
-  padding: 3rem 5rem 3.5rem 5rem;
+  padding: 3rem 2.5rem 3.5rem 2.5rem;
   font-size: 2rem;
   display: flex;
   flex-direction: column;

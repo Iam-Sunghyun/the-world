@@ -6,6 +6,8 @@
 }
 
 .home-text {
+  text-decoration: none;
+  color: var(--color-light--3);
   font-size: 4rem;
   margin: 0 0.7rem 0;
 }
