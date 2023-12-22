@@ -1,7 +1,9 @@
-import { useParams, useSearchParams } from 'react-router-dom';
-import styles from './Map.module.css'
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import styles from './Map.module.css';
 
 function Map() {
+  const navigate = useNavigate();
+
   const [searchParams, setSearchParams] = useSearchParams();
   const lat = searchParams.get('lat');
   const lng = searchParams.get('lng');
@@ -9,11 +11,10 @@ function Map() {
 
   // console.log(searchParams);
   return (
-    <div className={styles.map}>
-      Position: { lat }, { lng }. { id }
-      <button onClick={() => setSearchParams({ lat: 10, lng: 15})} >test</button>
-    </div> 
-  )
+    <div className={styles.map} onClick={() => navigate('form')}>
+      Position: {lat}, {lng}. {id}
+    </div>
+  );
 }
 
 export default Map;
