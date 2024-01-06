@@ -1,9 +1,10 @@
+import { useCities } from '../contexts/CitiesContext';
 import styles from './CountriesList.module.css';
 import CountryItem from './CountryItem';
 import Spinner from './Spinner';
 
-function CountriesList({ cities, isLoading }) {
-  // const [countries, setCountires] = useState(new Set());
+function CountriesList() {
+  const { cities, isLoading } = useCities();
 
   // 로딩 표시용 회전 효과
   if (isLoading) return <Spinner />;
