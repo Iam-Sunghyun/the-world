@@ -1,5 +1,9 @@
-import { useParams, useSearchParams } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useCities } from '../contexts/CitiesContext';
+import Button from './Button';
 import styles from './City.module.css';
+import Spinner from './Spinner';
 
 // 날짜 형식 정리 함수
 const formatDate = (date) =>
@@ -12,23 +16,21 @@ const formatDate = (date) =>
 
 function City() {
   const { id } = useParams();
-  const [searchParams, setSearchParams] = useSearchParams();
-  const lat = searchParams.get('lat');
-  const lng = searchParams.get('lng');
+  const navigate = useNavigate();
+  const { getCity, currentCity, isLoading } = useCities();
+  const { emoji, cityName, notes, date } = currentCity;
 
+  // 현재 URL의 id로 도시 데이터 가져오기
+  useEffect(() => {
+    getCity(id);
+  }, [id]);
 
-  const currentCity = {
-    cityName: 'Lisbon',
-    emoji: '🇵🇹',
-    date: '2027-10-31T15:59:59.138Z',
-    notes: 'My favorite city so far!',
-  };
-
-  const { cityName, emoji, date, notes } = currentCity;
+  if (isLoading === true) {
+    return <Spinner></Spinner>;
+  }
 
   return (
-    <div className={ styles.city }>
-      <div>{ lat } { lng }</div>
+    <div className={styles.city}>
       <div className={styles.row}>
         <h6>City name</h6>
         <h3>
@@ -54,9 +56,10 @@ function City() {
           Check out {cityName} on Wikipedia &rarr;
         </a>
       </div>
-
       <div>
-        {/* <ButtonBack /> */}
+        <Button type={'back'} onClick={() => navigate(-1)}>
+          뒤로가기
+        </Button>
       </div>
     </div>
   );
