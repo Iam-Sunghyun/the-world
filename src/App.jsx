@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { CitiesProvider } from './contexts/CitiesContext';
 import City from './components/City';
 import CityList from './components/CityList';
 import Countries from './components/CountriesList';
@@ -11,30 +11,9 @@ import PageNotFound from './pages/PageNotFound';
 import Pricing from './pages/Pricing';
 import Product from './pages/Product';
 
-const FAKE_SERVER_BASE_URL = 'http://localhost:8000';
-
 function App() {
-  const [cities, setCities] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-
-  // fake json 데이터 fetch
-  useEffect(() => {
-    async function fetchCities() {
-      setIsLoading(true);
-      try {
-        const fetched = await fetch(`${FAKE_SERVER_BASE_URL}/cities`);
-        const data = await fetched.json();
-        setCities(data);
-      } catch (e) {
-        console.log(e);
-      }
-      setIsLoading(false);
-    }
-    fetchCities();
-  }, []);
-
   return (
-    <>
+    <CitiesProvider>
       <BrowserRouter>
         <Routes>
           {/* path="요청 경로", element="컴포넌트가 반환하는 리액트 엘리먼트"   */}
@@ -44,16 +23,16 @@ function App() {
           <Route path='/pricing' element={<Pricing />} />
           <Route path='/login' element={<Login />} />
           <Route path='/app' element={<AppLayout />}>
-            <Route index element={<Navigate test="test" to='cities' /> } />
-            <Route path='cities' element={<CityList cities={cities} isLoading={isLoading} />} />
+            <Route index element={<Navigate replace={true} to='cities' />} />
+            <Route path='cities' element={<CityList />} />
             <Route path='cities/:id' element={<City />} />
-            <Route path='countries' element={ <Countries cities={cities} isLoading={isLoading} />} />
+            <Route path='countries' element={<Countries />} />
             <Route path='form' element={<Form />} />
           </Route>
           <Route path='*' element={<PageNotFound />} />
         </Routes>
       </BrowserRouter>
-    </>
+    </CitiesProvider>
   );
 }
 
