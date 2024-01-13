@@ -10,6 +10,11 @@
   gap: 2rem;
 }
 
+/* CSS 의사 요소 ::-webkit-scrollbar 는 요소에 overflow:scroll;이 설정되어 있을 때 해당 요소의 스크롤바 스타일 지정함. */
+.city::-webkit-scrollbar {
+  display: none;
+}
+
 .row {
   display: flex;
   flex-direction: column;
@@ -44,3 +49,5 @@
   font-size: 1.6rem;
   color: var(--color-brand--1);
 }
+
+
