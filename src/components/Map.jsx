@@ -1,17 +1,42 @@
+import { useEffect } from 'react';
+import { useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMap, useMapEvents } from 'react-leaflet';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useCities } from '../contexts/CitiesContext';
+import { useGeolocation } from '../hooks/useGeolocaion';
+import Button from './Button';
 import styles from './Map.module.css';
 
 function Map() {
   // const navigate = useNavigate();
-  const { cities, currentCity } = useCities();
+  const { cities } = useCities();
+  const [ mapPosition, setMapPosition ] = useState([37, 127])
+  const { isLoading, error, position, getPosition } = useGeolocation();
+  const [clickedPosition, setClikedPosition] = useSearchParams();
+  
+  const lat = clickedPosition.get('lat');
+  const lng = clickedPosition.get('lng');
+
+  // 지도 클릭하여 쿼리스트링에 좌표가 업데이트되면
+  // 해당 좌표로 mapPosition 업데이트
+  useEffect(() => {
+    if (lat && lng) setMapPosition([lat, lng]);
+  }, [lat, lng])
+
+  // 내 위치 가져오기 버튼으로(getPosition 함수 호출) position에 내 위치가 업데이트 되면
+  // positioin(현재 위치 값)으로 mapPosition(지도 위치) 업데이트
+  useEffect(() => {
+    if (position) setMapPosition(position);
+  }, [position])
 
   return (
-    <div className={styles.mapContainer}>
+    <div className={ styles.mapContainer }>
+      <Button type="position" onClick={ getPosition }>
+        { isLoading ? '가져오는 중...' : error ? alert('실패') : '내 위치 가져오기'}
+      </Button>
       <MapContainer
         className={styles.map}
-        center={[currentCity.position?.lat || 37, currentCity.position?.lng || 127]}
+        center={mapPosition}
         zoom={6}
         scrollWheelZoom={true}
       >
@@ -29,7 +54,7 @@ function Map() {
           </Marker>
         ))}
         <ChangeMarker
-          position={[currentCity.position?.lat || 37, currentCity.position?.lng || 127]}
+          position={mapPosition}
         />
         <DetectClick />
       </MapContainer>
