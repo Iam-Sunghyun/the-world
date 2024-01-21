@@ -15,12 +15,12 @@ const formatDate = (date) =>
   }).format(new Date(date));
 
 function City() {
-  const { id } = useParams();
   const navigate = useNavigate();
+  const { id } = useParams();
   const { getCity, currentCity, isLoading } = useCities();
   const { emoji, cityName, notes, date } = currentCity;
-
-  // 현재 URL의 id로 도시 데이터 가져오기
+ 
+  // 현재 URL의 id로 도시 데이터 가져와 CitiesContext의 currentCity 상태 업데이트
   useEffect(() => {
     getCity(id);
   }, [id]);

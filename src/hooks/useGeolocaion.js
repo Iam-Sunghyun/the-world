@@ -1,8 +1,10 @@
+// MDN GeoLocationAPI https://developer.mozilla.org/ko/docs/Web/API/Geolocation_API
 import { useState } from 'react';
 
-export function useGeolocation(defaultPosition = null) {
+// GeoLocation API를 통해 위치 정보 가져오는 커스텀 훅
+export function useGeolocation() {
   const [isLoading, setIsLoading] = useState(false);
-  const [position, setPosition] = useState(defaultPosition);
+  const [position, setPosition] = useState([37, 127]);
   const [error, setError] = useState(null);
 
   function getPosition() {
@@ -18,6 +20,7 @@ export function useGeolocation(defaultPosition = null) {
         setIsLoading(false);
       },
       (error) => {
+        alert('실패');
         setError(error.message);
         setIsLoading(false);
       }
